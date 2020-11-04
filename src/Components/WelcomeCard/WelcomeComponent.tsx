@@ -1,5 +1,5 @@
 import React from "react";
-import LinkComponent from "../Peripherals/LinkComponent/LinkComponent";
+import LinkComponent from "../Peripherals/Link/Link";
 import "./WelcomeComponent.scss";
 
 const WelcomeComponent: React.FC = () => {

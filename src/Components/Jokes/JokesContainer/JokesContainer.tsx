@@ -1,5 +1,4 @@
 import React from "react";
-import ButtonComponent from "../../Peripherals/ButtonCompoent/ButtonComponent";
 import JokesItem from "../JokesItem/JokesItem";
 import "./JokesContainer.scss";
 

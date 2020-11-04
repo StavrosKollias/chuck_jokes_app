@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { getEnabledCategories } from "trace_events";
-import { idText } from "typescript";
-import ButtonComponent from "../../Peripherals/ButtonCompoent/ButtonComponent";
+import Button from "../../Peripherals/Button/Button";
 
 interface IJokesItemProps {
    title: number;
@@ -12,14 +10,14 @@ interface IJokesItemProps {
 const JokesItem: React.FC<IJokesItemProps> = (props) => {
    const randomNumber = Math.floor(Math.random() * Math.floor(20));
    const [rate, SetRate] = useState(randomNumber);
-   const historyRate = rate;
    const arrayOfclassesText = ["txt-primary", "txt-secondary", "txt-light-blue"];
-   const ratateClassStar = {
+   const ratateTransform = {
       transform: `rotate(${180 * rate}deg) scale(${Math.pow(-1, rate)},${Math.pow(-1, rate)})`,
    };
 
-   const handleClickRateChangeButton = () => {
-      if (historyRate == rate) SetRate(rate + 1);
+   const handleClickRateChangeButton = (event:React.MouseEvent<HTMLButtonElement>) => {
+      const button = event.currentTarget;
+      if(randomNumber===rate) SetRate(rate + 1); button.className="btn-success";
    };
 
    return (
@@ -38,15 +36,15 @@ const JokesItem: React.FC<IJokesItemProps> = (props) => {
          <div className="jokes-item-text mb-1">{props.joke}</div>
 
          <div className="jokes-item-rate">
-            <ButtonComponent
+            <Button
                id="rate-btn"
                icon={<i className="fas fa-thumbs-up"></i>}
-               title="rate the joke"
+               title="Rate this joke!!"
                label=""
                className="btn-primary"
-               handleClick={(e) => handleClickRateChangeButton}
+               handleClick={(e) => handleClickRateChangeButton(e)}
             />
-            <div className="jokes-item-rate-number" style={ratateClassStar}>
+            <div className="jokes-item-rate-number" style={ratateTransform}>
                <span className="rate-counter">{rate}</span>
             </div>
          </div>

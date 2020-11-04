@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import LinkComponent from "./LinkComponent";
+import LinkComponent from "./Link";
 
 describe("Link component behavior", () => {
    it("renders", () => {

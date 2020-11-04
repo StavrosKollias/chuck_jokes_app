@@ -1,9 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
 import JokesItem from "./JokesItem";
-import reactMock from "react";
-
-const setHookState = (newState) => jest.fn().mockImplementation(() => [newState, () => {}]);
 
 describe("Jokes Item", () => {
    let wrapper;
@@ -17,16 +14,9 @@ describe("Jokes Item", () => {
       expect(wrapper.find(".jokes-item-text").text()).toEqual("I am the joke haha!");
    });
 
-   test("button click update counter", () => {
-      reactMock.useState = setHookState({
-         arrayValues: [],
-         isFetching: false,
-      });
-
-      //   const wrapper = shallow(<ComponentWithHook/>)
+   test("button click update", () => {
       expect(wrapper.find(".rate-counter").exists()).toEqual(true);
-
       wrapper.find("#rate-btn").simulate("click");
-      //   expect(wrapper.find(".rate-counter").text()).toBe();
+      wrapper.find("#rate-btn").hasClass("btn-success");
    });
 });

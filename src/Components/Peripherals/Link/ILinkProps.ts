@@ -1,4 +1,4 @@
-export interface ILinkComponentProps {
+export interface ILinkProps {
    to: string;
    className: string;
    label: string;

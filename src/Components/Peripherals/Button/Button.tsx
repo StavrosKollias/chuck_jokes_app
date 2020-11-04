@@ -1,7 +1,7 @@
 import React from "react";
-import { IButtonComponentProps } from "./IButtonComponentProps";
+import { IButtonProps } from "./IButton";
 
-const ButtonComponent: React.FC<IButtonComponentProps> = (props) => {
+const Button: React.FC<IButtonProps> = (props) => {
    return (
       <button
          className={props.className}
@@ -17,4 +17,4 @@ const ButtonComponent: React.FC<IButtonComponentProps> = (props) => {
    );
 };
 
-export default ButtonComponent;
+export default Button;
