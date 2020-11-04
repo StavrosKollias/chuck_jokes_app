@@ -1,0 +1,22 @@
+@import "../../../styles/variables";
+
+.jokes {
+   &-container {
+      @extend %card-component;
+   }
+
+   &-item {
+      &-rate {
+         width: 50%;
+         min-width: 20rem;
+         margin: auto;
+         display: flex;
+         justify-content: space-evenly;
+         align-items: center;
+
+         &-number {
+            @extend %star-rating;
+         }
+      }
+   }
+}

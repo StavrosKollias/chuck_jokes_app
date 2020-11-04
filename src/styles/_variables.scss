@@ -1,0 +1,102 @@
+$primary-color: #001c4a;
+$secondary-color: #046ab8;
+$light-blue-color: #0199dc;
+$light-color: #f2f7fb;
+$white-color: #fff;
+$light-gray-color: #ddd;
+$gray-color: #3d3d3d;
+$black-color: #000000;
+
+// Breakpoints
+$mobile: 768px;
+
+// funtions
+
+@function set-text-color($color) {
+   @if (lightness($color) >50) {
+      @return $primary-color;
+   } @else {
+      @return $white-color;
+   }
+}
+
+// Keyframes
+
+@keyframes movedownOpacity {
+   0% {
+      opacity: 0;
+      z-index: 0;
+      transform: translateY(-4rem);
+   }
+
+   50% {
+      opacity: 0.3;
+      z-index: 0;
+      transform: translateY(-2rem);
+   }
+
+   100% {
+      opacity: 1;
+      z-index: 1;
+      transform: translateY(0);
+   }
+}
+
+// scopes
+
+%card-component {
+   width: 90%;
+   margin: 1rem auto;
+   height: auto;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 1rem;
+   box-shadow: 0 0 1rem $light-gray-color, 0 1rem 1.2rem $light-color;
+   border: 3px solid $white-color;
+   text-align: center;
+   transition: all 0.5s ease;
+   transform: translateY(-5rem);
+   opacity: 0;
+   animation: 1s movedownOpacity linear forwards;
+
+   @media (min-width: $mobile) {
+      width: 70%;
+      max-width: 45rem;
+      padding: 2rem;
+   }
+}
+
+%star-rating {
+   position: relative;
+   background-color: $light-blue-color;
+   padding: 1rem;
+   font-weight: bold;
+   color: set-text-color($secondary-color);
+   z-index: 1;
+   transition: all 0.2s ease-in-out;
+   &:after {
+      position: absolute;
+      border: 1rem solid $secondary-color;
+      left: 0;
+      z-index: -1;
+      top: 0;
+      width: 0;
+      transform-origin: 50% 50%;
+      transform: rotate(45deg);
+      height: 0;
+      content: "";
+   }
+
+   span {
+      position: absolute;
+      width: 100%;
+      font-size: 0.8rem;
+      top: 0;
+      left: 0;
+      height: 100%;
+      line-height: 2rem;
+      transform-origin: 50% 50%;
+      z-index: 2;
+   }
+}

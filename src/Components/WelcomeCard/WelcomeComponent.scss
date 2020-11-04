@@ -1,0 +1,12 @@
+@import "../../styles/variables";
+
+.welcome-card-component {
+   @extend %card-component;
+
+   &-details {
+      padding: 0.5rem;
+      @media (min-width: $mobile) {
+         padding: 1rem;
+      }
+   }
+}

@@ -1,0 +1,19 @@
+@import "../../styles/variables";
+.fotter-container {
+   background-color: $secondary-color;
+
+   ul {
+      display: block;
+      list-style: auto;
+   }
+
+   li {
+      display: block;
+      color: $white-color;
+   }
+
+   & > div,
+   h3 {
+      color: $white-color;
+   }
+}

@@ -13,6 +13,6 @@ describe("NavigationBar", () => {
    });
 
    test("check how menay route links", () => {
-      expect(wrapper.find(".nav-menu-item")).toHaveLength(3);
+      expect(wrapper.find(".nav-menu-item")).toHaveLength(4);
    });
 });

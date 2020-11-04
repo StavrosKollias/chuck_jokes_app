@@ -1,0 +1,49 @@
+@import "../../../styles/variables";
+
+.main-nav {
+   display: flex;
+   flex-direction: column;
+   height: auto;
+   align-items: center;
+   border-bottom: 0.5rem solid $light-blue-color;
+
+   @media (min-width: $mobile) {
+      flex-direction: row;
+      justify-content: space-between;
+   }
+
+   .nav-menu {
+      padding: 0.5rem;
+
+      @media (min-width: $mobile) {
+         padding: 1rem;
+      }
+
+      li {
+         padding: 0.4rem;
+         color: $primary-color;
+
+         @media (min-width: $mobile) {
+            padding: 1rem;
+         }
+
+         i {
+            font-size: 1rem;
+            margin-right: 0.3rem;
+         }
+         a,
+         i {
+            padding: 0.3rem 0;
+            color: $primary-color;
+            border-bottom: 1px solid $white-color;
+         }
+
+         &:hover {
+            a,
+            i {
+               color: $secondary-color;
+            }
+         }
+      }
+   }
+}
