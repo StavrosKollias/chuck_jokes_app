@@ -6,3 +6,9 @@ export const recordAllreadyExists = (arrayDisplayed: Array<IJoke>, record: IJoke
    });
    return recordFilter.length > 0;
 };
+
+export const decodeEntities = (string: string) => {
+   const txtArea = document.createElement("textarea");
+   txtArea.innerHTML = string;
+   return txtArea.value;
+};

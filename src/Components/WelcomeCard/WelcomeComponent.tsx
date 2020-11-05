@@ -5,7 +5,7 @@ import "./WelcomeComponent.scss";
 const WelcomeComponent: React.FC = () => {
    return (
       <section className="welcome-card-component">
-         <h1 className="welcome-card-component-title txt-secondary mb-1"> Welcome to Deadly Jokes!!</h1>
+         <h1 className="welcome-card-component-title txt-primary mb-1"> Welcome to Chuck Jokes!!</h1>
 
          <div className="welcome-card-component-details mb-1">
             You will find the most nerdy and hilarious jokes about Chuck Norris here on our Website!! If you are Chuck Norris fanatic view our list of jokes. Select the

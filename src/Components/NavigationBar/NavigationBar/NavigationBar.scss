@@ -20,11 +20,11 @@
       }
 
       li {
-         padding: 0.4rem;
+         padding: 0 0.5rem;
          color: $primary-color;
 
          @media (min-width: $mobile) {
-            padding: 1rem;
+            padding: 0 1rem;
          }
 
          i {
@@ -38,7 +38,8 @@
             border-bottom: 1px solid $white-color;
          }
 
-         &:hover {
+         &:hover,
+         &:focus-within {
             a,
             i {
                color: $secondary-color;

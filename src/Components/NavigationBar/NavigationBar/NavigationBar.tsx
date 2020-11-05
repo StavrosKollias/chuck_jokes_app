@@ -7,7 +7,7 @@ import "./NavigationBar.scss";
 const NavigationBar: React.FC<INavigationBarProps> = (props) => {
    return (
       <section className="main-nav">
-         <NavigationBarLogo logoLabel="Deadly Jokes" />
+         <NavigationBarLogo logoLabel="Chuck Jokes" />
          <ul className="nav-menu">
             <NavigationBarItem className="nav-menu-item" to="/" label="Home" title="Back to home" icon={<i className="fas fa-home"></i>} />
             <NavigationBarItem className="nav-menu-item" to="/search" label="Search" title="Search jokes to have fun." icon={<i className="fas fa-search"></i>} />

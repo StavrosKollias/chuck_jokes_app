@@ -1,6 +1,6 @@
-async function getRandomJoke(): Promise<any> {
+async function getAllRandomJokesNotExplicit(): Promise<any> {
    try {
-      const response = await fetch(`http://api.icndb.com/jokes/random?exclude=[explicit]`);
+      const response = await fetch(`http://api.icndb.com/jokes?exclude=[explicit]`);
       const data = await response.json();
       return data.value;
    } catch (e) {
@@ -20,7 +20,7 @@ async function getRandomJokeByCharacter(firstName?: string, lastName?: string): 
 
 async function getMultipleRandomJokes(numberJokes: number): Promise<any> {
    try {
-      const response = await fetch(`http://api.icndb.com/jokes/random/${numberJokes}`);
+      const response = await fetch(`http://api.icndb.com/jokes/random/${numberJokes}?exclude=[explicit]`);
       const data = await response.json();
       return data.value;
    } catch (e) {
@@ -28,4 +28,4 @@ async function getMultipleRandomJokes(numberJokes: number): Promise<any> {
    }
 }
 
-export { getRandomJoke, getRandomJokeByCharacter, getMultipleRandomJokes };
+export { getAllRandomJokesNotExplicit, getRandomJokeByCharacter, getMultipleRandomJokes };

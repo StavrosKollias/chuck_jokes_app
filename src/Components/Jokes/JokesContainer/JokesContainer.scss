@@ -1,23 +1,28 @@
 @import "../../../styles/variables";
 
 .jokes {
-  &-container {
-    overflow: hidden; // maybe not the solution
-  }
+   &-container {
+      overflow: hidden; // maybe not the solution
+   }
 
-  &-item {
-    @extend %card-component;
-    &-rate {
-      width: 50%;
-      min-width: 20rem;
-      margin: auto;
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
+   &-item {
+      @extend %card-component;
 
-      &-number {
-        @extend %star-rating;
+      &:nth-of-type(odd) {
+         background-color: $light-color;
       }
-    }
-  }
+
+      &-rate {
+         width: 50%;
+         min-width: 20rem;
+         margin: auto;
+         display: flex;
+         justify-content: space-evenly;
+         align-items: center;
+
+         &-number {
+            @extend %star-rating;
+         }
+      }
+   }
 }

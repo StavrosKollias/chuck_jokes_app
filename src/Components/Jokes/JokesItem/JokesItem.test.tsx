@@ -3,14 +3,15 @@ import { shallow } from "enzyme";
 import JokesItem from "./JokesItem";
 
 describe("Jokes Item", () => {
-   let wrapper;
+   let wrapper, fakeFunction;
    beforeAll(() => {
-      wrapper = shallow(<JokesItem title={2} categories={["nerdy", "explicit"]} joke="I am the joke haha!" />);
+      fakeFunction = jest.fn(() => "3");
+      wrapper = shallow(<JokesItem key={0} title={"3"} categories={["nerdy", "explicit"]} joke="I am the joke haha!" onRender={fakeFunction} />);
    });
 
    test("recieved props", () => {
-      expect(wrapper.find(".jokes-item-category").text()).toEqual("Category: nerdy, explicit");
-      expect(wrapper.find(".jokes-item-title").text()).toEqual("Joke Title: 2");
+      expect(wrapper.find(".jokes-item-category").text()).toEqual("Categories: nerdy, explicit");
+      expect(wrapper.find(".jokes-item-title").text()).toEqual("Joke Title: 3");
       expect(wrapper.find(".jokes-item-text").text()).toEqual("I am the joke haha!");
    });
 
@@ -18,5 +19,10 @@ describe("Jokes Item", () => {
       expect(wrapper.find(".rate-counter").exists()).toEqual(true);
       wrapper.find("#rate-btn").simulate("click");
       wrapper.find("#rate-btn").hasClass("btn-success");
+   });
+
+   test("function render times", () => {
+      fakeFunction();
+      expect(fakeFunction).toBeCalledTimes(1);
    });
 });
