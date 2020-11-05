@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { decodeEntities } from "../../../utils/utils";
 import Button from "../../Peripherals/Button/Button";
 import { IJokesItemProps } from "./IJokeItemProps";
-const randomNumber = Math.floor(Math.random() * Math.floor(20));
 const arrayOfclassesText = ["txt-primary", "txt-secondary", "txt-light-blue"];
+
 const JokesItem: React.FC<IJokesItemProps> = (props) => {
+   const randomNumber = Math.floor(Math.random() * Math.floor(20));
    const [rate, SetRate] = useState<number>(randomNumber);
    const ratateTransform = {
       transform: `rotate(${180 * rate}deg) scale(${Math.pow(-1, rate)},${Math.pow(-1, rate)})`,
@@ -12,10 +13,9 @@ const JokesItem: React.FC<IJokesItemProps> = (props) => {
    const handleClickRateChangeButton = (event: React.MouseEvent<HTMLButtonElement>) => {
       console.log("like");
       const button = event.currentTarget;
-      if (randomNumber === rate)
-         SetRate((reate) => {
-            return rate + 1;
-         });
+      SetRate((rate) => {
+         return rate + 1;
+      });
       button.className = "btn-success";
    };
 
