@@ -21,7 +21,9 @@ export const spliceArray = (array: Array<IJoke>, start: number, stop: number) =>
 export const validationInputFullName = (str: string) => {
    const testNumber = str.replace(/[a-z ,.'-]+$/i, "");
    const testSpace = str.replace(/[a-z,1-9.'-]+$/i, "");
+   // const testSpace = str.replace(/^[  ]+$/i, "");
    const indexOfSpace = str.indexOf(" ");
+   console.log(testSpace.length);
    return testNumber.length === 0 && testSpace.length > 0 && indexOfSpace < str.length - 1;
 };
 
