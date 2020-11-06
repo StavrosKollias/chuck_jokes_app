@@ -10,11 +10,19 @@ const Footer: React.FC = () => {
             <div className="footer-grid grid">
                <div className="grid-item  display-flex-column">
                   <h3>Side links</h3>
-                  <ul className="footer-list-menu ">
-                     <li>Resources</li>
-                     <li>Events</li>
-                     <li>Jokes</li>
-                     <li>Chuck Is God</li>
+                  <ul className="footer-list-menu">
+                     <li>
+                        <a href="https://www.google.com">Resources</a>
+                     </li>
+                     <li>
+                        <a href="https://chucknorris.com/">Events</a>
+                     </li>
+                     <li>
+                        <a href="https://chucknorris.com/">Jokes</a>
+                     </li>
+                     <li>
+                        <a href="https://chucknorris.com/">Chuck Is God</a>
+                     </li>
                   </ul>
                </div>
 

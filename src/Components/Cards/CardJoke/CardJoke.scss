@@ -1,117 +1,116 @@
 @import "../../../styles/variables";
 .card-joke {
-  &-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    min-height: 30rem;
-
-    &:nth-last-child(even) {
-      transform: translateY(4rem);
-      animation: 1s moveleftInOpacity linear forwards;
-    }
-
-    &:nth-last-child(odd) {
-      transform: translateY(-4rem);
-      animation: 1s moverightInOpacity linear forwards;
-    }
-
-    @media (min-width: $mobile) {
-      min-height: 30rem;
-      $animations: moveupOpacity moveleftInOpacity moverightInOpacity
-        movedownOpacity;
-
-      @each $animation in $animations {
-        $i: index($animations, $animation);
-        &:nth-last-child(#{$i}) {
-          animation: 1s $animation linear forwards;
-        }
-      }
-    }
-
-    &:hover > img,
-    &:focus-within > img {
-      transform: scale(1.25);
-
-      @media (min-width: $mobile) {
-        transform: scale(1.15);
-      }
-    }
-
-    &:focus-within > &-details {
-      &:after {
-        opacity: 0.7;
-      }
-    }
-
-    img {
-      position: absolute;
-      left: 0;
-      top: -10%;
-      width: 100%;
-      max-width: 100%;
-      min-height: 100%;
-      z-index: 0;
-      transition: all 0.3s ease-in-out;
-      transform: scale(1.15);
-
-      @media (min-width: $mobile) {
-        top: 0;
-        width: 140%;
-        max-width: 140%;
-        min-height: 100%;
-        top: -30%;
-      }
-    }
-  }
-
-  &-details {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    z-index: 2;
-
-    h1 {
-      font-size: 2rem;
-    }
-
-    .categories {
-      position: absolute;
-      top: 0.2rem;
-      left: 0.2rem;
-    }
-
-    > * {
-      z-index: 2;
-    }
-    p {
-      width: 90%;
-    }
-
-    &:hover {
-      &:after {
-        opacity: 0.7;
-      }
-    }
-
-    &:after {
-      content: "";
-      position: absolute;
-      left: 0;
+   &-container {
+      position: relative;
       width: 100%;
       height: 100%;
+      overflow: hidden;
+      min-height: 30rem;
+
+      &:nth-last-child(even) {
+         transform: translateY(4rem);
+         animation: 1s moveleftInOpacity linear forwards;
+      }
+
+      &:nth-last-child(odd) {
+         transform: translateY(-4rem);
+         animation: 1s moverightInOpacity linear forwards;
+      }
+
+      @media (min-width: $mobile) {
+         min-height: 30rem;
+         $animations: moveupOpacity moveleftInOpacity moverightInOpacity movedownOpacity;
+
+         @each $animation in $animations {
+            $i: index($animations, $animation);
+            &:nth-last-child(#{$i}) {
+               animation: 1s $animation linear forwards;
+            }
+         }
+      }
+
+      &:hover > img,
+      &:focus-within > img {
+         transform: scale(1.25);
+
+         @media (min-width: $mobile) {
+            transform: scale(1.15);
+         }
+      }
+
+      &:focus-within > &-details {
+         &:after {
+            opacity: 0.7;
+         }
+      }
+
+      img {
+         position: absolute;
+         left: 0;
+         top: -5%;
+         width: 100%;
+         max-width: 100%;
+         min-height: 100%;
+         z-index: 0;
+         transition: all 0.3s ease-in-out;
+         transform: scale(1.15);
+
+         @media (min-width: $mobile) {
+            top: 0;
+            width: 140%;
+            max-width: 140%;
+            min-height: 100%;
+            top: -30%;
+         }
+      }
+   }
+
+   &-details {
+      position: absolute;
+      left: 0;
       top: 0;
-      z-index: 1;
-      background: $primary-color;
-      opacity: 0.4;
-      transition: all 0.35s ease-in-out;
-    }
-  }
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      z-index: 2;
+
+      h1 {
+         font-size: 2rem;
+      }
+
+      .categories {
+         position: absolute;
+         top: 0.2rem;
+         left: 0.2rem;
+      }
+
+      > * {
+         z-index: 2;
+      }
+      p {
+         width: 90%;
+      }
+
+      &:hover {
+         &:after {
+            opacity: 0.7;
+         }
+      }
+
+      &:after {
+         content: "";
+         position: absolute;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         top: 0;
+         z-index: 1;
+         background: $primary-color;
+         opacity: 0.4;
+         transition: all 0.35s ease-in-out;
+      }
+   }
 }
