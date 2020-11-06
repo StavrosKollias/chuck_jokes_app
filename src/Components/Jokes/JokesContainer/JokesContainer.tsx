@@ -1,83 +1,164 @@
 import React, { useEffect, useState } from "react";
-import { useCallback } from "react";
 import { IJoke } from "../../../Interfaces/IJokes";
-import { getAllRandomJokesNotExplicit, getMultipleRandomJokes } from "../../../utils/apis";
+import { getAllRandomJokesNotExplicit, getMultipleRandomJokes, getRandomJokeByCharacter } from "../../../utils/apis";
+import { runJokeItems, runLoadMore, spliceArray, validationInputFullName } from "../../../utils/utils";
+import ControlBar from "../../Controlbar/ControlSearchBar";
+import LoadMore from "../../LoadMore/LoadMore";
 import JokesItem from "../JokesItem/JokesItem";
+import { IJokesContainerProps } from "./IJokesContainerProps";
+import { IJokesContainerState } from "./IJokesContainerState";
 import "./JokesContainer.scss";
 
-interface IJokesContainerProps {
-   multiple: boolean;
-   filter: boolean;
-   onRender?(e: any): void;
-}
-
-const INITIAL_STATE = { data: null, dataDisplayed: null, index: 5, multiple: null, filter: null };
-
-const spliceArray = (array: Array<IJoke>, start: number, stop: number) => {
-   const newArray = array.slice(start, stop);
-   return newArray;
+const INITIAL_STATE: IJokesContainerState = {
+   data: null,
+   index: 5,
+   multiple: null,
+   filter: null,
+   filterString: null,
+   error: false,
+   errorInput: true,
+   loading: false,
 };
 
-let counter = 0;
+const getRandomJokes = async (multiple: boolean) => {
+   let responseJokes;
+   multiple ? (responseJokes = await getMultipleRandomJokes(5)) : (responseJokes = await getMultipleRandomJokes(1));
+   if (responseJokes) return responseJokes;
+};
 
 const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
-   const getFourRandomJokes = async () => {
-      let responseJokes;
-      props.multiple ? (responseJokes = await getAllRandomJokesNotExplicit()) : (responseJokes = await getMultipleRandomJokes(1));
-      if (responseJokes) return responseJokes;
-   };
-
+   const [state, setState] = useState(INITIAL_STATE);
    props.onRender("");
 
-   const [state, setState] = useState(INITIAL_STATE);
-
-   const setDataForIndexView = (data: Array<IJoke>, index: number, length: number) => {
-      const displayingData = spliceArray(data, length, length + index);
-      return displayingData;
+   const filterData = (event: React.MouseEvent<HTMLButtonElement>) => {
+      const firstName = state.filterString.split(" ")[0];
+      const lastName = state.filterString.split(" ")[1];
+      getRandomJokeByCharacter(firstName, lastName).then((data) => {
+         setState((state: IJokesContainerState) => {
+            return {
+               ...state,
+               data: [data],
+               error: data.length > 0,
+            };
+         });
+      });
    };
 
-   const updateState = (newState) => {
-      setState(newState);
-   };
-
-   const insertNewData = (data: Array<IJoke>, dataDisplayed: Array<IJoke>, index: number) => {
-      const newIncommingData = spliceArray(data, dataDisplayed.length, dataDisplayed.length + index);
-      const newData = dataDisplayed.concat(newIncommingData);
-      setState((state) => {
+   const handleInputChangeFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.currentTarget.value;
+      const validation = validationInputFullName(value);
+      setState((state: IJokesContainerState) => {
          return {
             ...state,
-            dataDisplayed: newData,
+            filterString: value,
+            errorInput: !validation,
          };
       });
    };
 
-   useEffect(() => {
-      if (state.multiple !== props.multiple) {
-         getFourRandomJokes().then((data) => {
-            let displayingData = setDataForIndexView(data, state.index, 0);
-            const newState = { data: data, dataDisplayed: displayingData, index: 5, multiple: props.multiple, filter: props.filter };
-            updateState(newState);
-            console.log(counter + 1);
+   const setLoadingState = () => {
+      const el = document.querySelector(".jokes-container");
+      const bottom = Number((el.scrollHeight - el.scrollTop).toFixed(0)) - el.clientHeight < 50;
+      if (bottom) {
+         setState((state: IJokesContainerState) => {
+            return {
+               ...state,
+               loading: true,
+            };
          });
       }
+   };
+
+   const updateState = (newState: IJokesContainerState) => {
+      setState(newState);
+   };
+
+   const initialMountData = () => {
+      if (state.multiple !== props.multiple) {
+         getRandomJokes(props.multiple).then((data) => {
+            const newState = {
+               data: data,
+               index: 5,
+               multiple: props.multiple,
+               filter: props.filter,
+               filterString: null,
+               error: false,
+               errorInput: true,
+               loading: false,
+            };
+            updateState(newState);
+         });
+      }
+   };
+
+   const updateDataOnScroll = (loading) => {
+      const stateData = state.data;
+      if (loading) {
+         getMultipleRandomJokes(state.index).then((data) => {
+            const newData = stateData.concat(data);
+            setState((state: IJokesContainerState) => {
+               return {
+                  ...state,
+                  data: newData,
+                  loading: false,
+               };
+            });
+         });
+      }
+   };
+
+   // initial mount
+   useEffect(() => {
+      initialMountData();
+      window.addEventListener("scroll", () => {
+         runJokeItems();
+         const element = runLoadMore();
+         if (element) setLoadingState();
+      });
+
+      runJokeItems();
+   }, [props.filter, props.multiple, state.index, state.multiple]);
+
+   // componentDidUpdate
+   useEffect(() => {
+      updateDataOnScroll(state.loading);
+      runJokeItems();
    });
 
+   // umount
+   useEffect(() => {
+      return () => {};
+   });
+
+   const loadMoreButtonDisplayed = state.multiple && state.data.length;
    return (
-      <section className="jokes-container py-1">
-         {state.filter && <div>Filter Will be displayed here</div>}
+      <section className="jokes-container">
+         {state.filter && (
+            <ControlBar
+               error={state.errorInput}
+               validationInputFullName={(e) => validationInputFullName(e)}
+               handleInputChangeFilter={(e) => handleInputChangeFilter(e)}
+               filterData={(e) => filterData(e)}
+            />
+         )}
 
          {state.data && (
             <div>
                {!state.multiple &&
                   state.data.map((e: IJoke, i: number) => {
-                     return <JokesItem key={i} title={`${e.id}`} categories={e.categories} joke={e.joke} onRender={props.onRender} />;
+                     const indexFirstword = e.joke.indexOf(" ");
+                     return (
+                        <JokesItem key={i} title={e.joke.substr(0, indexFirstword)} rating={e.id} categories={e.categories} joke={e.joke} onRender={props.onRender} />
+                     );
                   })}
                {state.multiple &&
-                  state.dataDisplayed.map((e: IJoke, i: number) => {
-                     console.log(counter + 1);
-                     return <JokesItem key={i} title={`${e.id}`} categories={e.categories} joke={e.joke} onRender={props.onRender} />;
+                  state.data.map((e: IJoke, i: number) => {
+                     const indexFirstword = e.joke.indexOf(" ");
+                     return (
+                        <JokesItem key={i} title={e.joke.substr(0, indexFirstword)} rating={e.id} categories={e.categories} joke={e.joke} onRender={props.onRender} />
+                     );
                   })}
-               {state.multiple && <button onClick={() => insertNewData(state.data, state.dataDisplayed, state.index)}>load More</button>}
+               {loadMoreButtonDisplayed && <LoadMore />}
             </div>
          )}
       </section>

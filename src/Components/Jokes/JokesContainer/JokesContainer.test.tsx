@@ -15,7 +15,7 @@ describe("jokes items in Jokes conetainer", () => {
    });
 
    test("rendering rendering jokes item", () => {
-      //   expect(wrapper.find(".jokes-item-title")).toHaveLength(1);
+      expect(wrapper.find(".jokes-item-title")).toHaveLength(0);
       fakeFunction.mockClear();
    });
 });

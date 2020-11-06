@@ -18,8 +18,17 @@ const CardsContainer: React.FC<ICardContainerProps> = (props) => {
    return (
       <section className="card-images-container">
          {props.jokes.map((e, i) => {
+            const indexFirstword = e.joke.indexOf(" ");
             return (
-               <CardJoke key={i} joke={e.joke} categories={e.categories} title={`Joke Title: ${e.id}`} btnLabel="View more" btnUrl={buttonUrls[0]} src={imagesUrls[i]} />
+               <CardJoke
+                  key={i}
+                  joke={e.joke}
+                  categories={e.categories}
+                  title={`Joke Title: ${e.joke.substr(0, indexFirstword)}`}
+                  btnLabel="View more"
+                  btnUrl={buttonUrls[0]}
+                  src={imagesUrls[i]}
+               />
             );
          })}
       </section>

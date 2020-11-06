@@ -37,6 +37,7 @@ p {
    }
 }
 
+input[type="submit"],
 button {
    cursor: pointer;
    position: relative;
@@ -44,7 +45,7 @@ button {
    width: auto;
    padding: 0.5rem 1rem;
    border-radius: 3px;
-   transition: all 0.35s ease-in-out;
+   // transition: all 0.35s ease-in-out;
 
    i {
       font-size: 1rem;
@@ -76,7 +77,16 @@ a {
 
 i {
    font-size: 2rem;
-   transition: all 0.25s ease-in-out;
+   transition: all 0.35s ease-in-out;
+}
+
+input {
+   padding: 0.5rem;
+   border: none;
+
+   &:focus {
+      outline: none;
+   }
 }
 
 .container {
@@ -182,7 +192,7 @@ i {
       &:focus {
          background: $light-color;
          color: set-text-color($light-color);
-         border: 1px solid $primary-color;
+         border-color: $primary-color;
       }
    }
 
@@ -195,7 +205,7 @@ i {
       &:focus {
          background: $light-color;
          color: $success-color;
-         border: 1px solid $light-color;
+         border-color: $success-color;
       }
    }
 
@@ -208,7 +218,7 @@ i {
       &:focus {
          background: $light-color;
          color: set-text-color($light-color);
-         border: 1px solid $secondary-color;
+         border-color: $secondary-color;
       }
    }
 
@@ -224,6 +234,11 @@ i {
          border: 1px solid $primary-color;
       }
    }
+   &-disabled {
+      pointer-events: none;
+      background-color: $light-gray-color;
+      border-color: $light-gray-color;
+   }
 }
 
 .input {
@@ -235,24 +250,34 @@ i {
    &-secondary {
       background: $secondary-color;
       color: set-text-color($secondary-color);
+
+      .input-container-sub {
+         background: $secondary-color;
+      }
    }
 
    &-light {
       background: $light-color;
       color: set-text-color($light-color);
+
+      .input-container-sub {
+         background: $light-color;
+      }
    }
 }
 
 .input-container {
    &-primary {
-      border: 1px solid $primary-color;
+      background-color: $primary-color;
+      border-bottom: 1px solid $primary-color;
       &:focus-within {
          border-color: set-text-color($primary-color);
       }
    }
 
    &-secondary {
-      border: 1px solid $secondary-color;
+      background-color: $secondary-color;
+      border-bottom: 1px solid $secondary-color;
 
       &:focus-within {
          border-color: set-text-color($secondary-color);
@@ -260,26 +285,103 @@ i {
    }
 
    &-light {
-      border: 1px solid $light-color;
+      background-color: $light-color;
+      border-bottom: 1px solid $light-color;
 
       &:focus-within {
          border-color: set-text-color($light-color);
+      }
+   }
+
+   &-error {
+      position: relative;
+      border-bottom: 1px solid $danger-color;
+
+      &:focus-within {
+         border-color: set-text-color($danger-color);
+      }
+      & ~ button {
+         pointer-events: none;
+         background-color: $light-gray-color;
+         border-color: $light-gray-color;
       }
    }
 }
 
 .grid {
    display: grid;
-   grid-template-columns: repeat(3, 1fr);
+   grid-template-columns: 1fr;
    align-items: center;
    justify-content: center;
+
    &-item {
+      width: 100%;
+      height: 100%;
       align-self: center;
       justify-self: center;
       padding: 1rem;
+
+      @media (min-width: $mobile) {
+         grid-template-columns: repeat(3, 1fr);
+      }
+   }
+
+   @media (min-width: $mobile) {
+      grid-template-columns: repeat(3, 1fr);
    }
 }
 
 .grid-row-item {
-   grid-column: 1 / span 3;
+   grid-column: 1;
+
+   @media (min-width: $mobile) {
+      grid-column: 1 / span 3;
+   }
+}
+
+.display {
+   &-flex-row-center {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+   }
+
+   &-flex-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+   }
+}
+
+.search-container-controls {
+   @extend %bar;
+}
+
+.error-span {
+   position: absolute;
+   top: 110%;
+   left: 0.5rem;
+   font-size: 0.8rem;
+   color: $danger-color;
+}
+
+.load-more-container {
+   margin: auto;
+   padding: 1rem;
+   width: 10%;
+   min-width: 10rem;
+   text-align: center;
+   opacity: 0;
+   transition: all 0.2s ease-in-out;
+   transform: translateY(-1rem);
+
+   &.show {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+
+.fetching-data {
+   margin: auto;
 }

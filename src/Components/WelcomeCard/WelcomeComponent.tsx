@@ -8,8 +8,8 @@ const WelcomeComponent: React.FC = () => {
          <h1 className="welcome-card-component-title txt-primary mb-1"> Welcome to Chuck Jokes!!</h1>
 
          <div className="welcome-card-component-details mb-1">
-            You will find the most nerdy and hilarious jokes about Chuck Norris here on our Website!! If you are Chuck Norris fanatic view our list of jokes. Select the
-            button below to see all jokes.
+            You will find the most nerdy and hilarious jokes about Chuck Norris here on our Website!! If you are Chuck Norris fanatic, start reading. Select the button
+            below to see all jokes. Chuck Norris rocks!!!
          </div>
 
          <div className="welcome-card-component-buttons">

@@ -4,4 +4,5 @@ export interface INavigationBarItemProps {
    label: string;
    title: string;
    icon?: JSX.Element;
+   id: string;
 }

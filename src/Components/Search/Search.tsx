@@ -1,9 +1,7 @@
 import React from "react";
 import JockesContainer from "../Jokes/JokesContainer/JokesContainer";
+import { ISearchProps } from "./ISearchProps";
 
-interface ISearchProps {
-   onRender?(e: any): void;
-}
 const Search: React.FC<ISearchProps> = (props) => {
    return (
       <section className="search-container">

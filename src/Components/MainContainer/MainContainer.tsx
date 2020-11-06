@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
-// import Footer from "../Footer/Foooter";
+import Footer from "../Footer/Foooter";
 import Header from "../Header/Header";
 import HomeContainer from "../Home/HomeContainer";
 import JockesContainer from "../Jokes/JokesContainer/JokesContainer";
@@ -27,7 +27,7 @@ const MainContainer: React.FC = () => {
                </Switch>
             </div>
          </BrowserRouter>
-         {/* <Footer /> */}
+         <Footer />
       </main>
    );
 };

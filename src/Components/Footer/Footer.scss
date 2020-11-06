@@ -1,19 +1,53 @@
 @import "../../styles/variables";
 .fotter-container {
-   background-color: $secondary-color;
+   background-color: $primary-color;
+   padding: 1rem;
+   font-style: italic;
 
-   ul {
-      display: block;
-      list-style: auto;
+   @media (min-width: $mobile) {
+      grid-template-columns: repeat(3, 1fr);
    }
 
-   li {
-      display: block;
-      color: $white-color;
+   form {
+      @media (min-width: $mobile) {
+         flex-wrap: nowrap;
+      }
+      flex-wrap: wrap;
+
+      div,
+      input[type="submit"] {
+         width: 100%;
+         @media (min-width: $mobile) {
+            width: auto;
+         }
+      }
    }
 
-   & > div,
+   .grid-item {
+      border-bottom: 1px solid $light-blue-color;
+
+      @media (min-width: $mobile) {
+         border: none;
+      }
+   }
+
+   .footer-list-menu {
+      max-width: 20rem;
+      display: block;
+
+      li {
+         display: block;
+         color: $white-color;
+         padding: 0.5rem;
+         text-align: center;
+      }
+   }
+
    h3 {
+      color: $light-blue-color;
+   }
+
+   & > div {
       color: $white-color;
    }
 }

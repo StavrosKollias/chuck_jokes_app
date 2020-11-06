@@ -3,10 +3,13 @@ import { shallow } from "enzyme";
 import Input from "./Input";
 
 describe("Input props", () => {
-   let wrapper;
+   let wrapper, fakeChangeFunction, validationFun;
    beforeAll(() => {
+      fakeChangeFunction = jest.fn(() => 3);
+      validationFun = jest.fn(() => false);
       wrapper = shallow(
          <Input
+            containerClassName="input-container-primary"
             type="range"
             placeHolder="Enter Number"
             name="input-test"
@@ -14,7 +17,10 @@ describe("Input props", () => {
             className="input-primary"
             label="I am label"
             defaultValue="Hello"
+            errorMessage="Error"
             icon={<i className="fas fa-search"></i>}
+            handleInputChange={fakeChangeFunction}
+            hanldeValidation={validationFun}
          />
       );
    });
@@ -33,22 +39,18 @@ describe("Input props", () => {
 
    test("Change function Input", () => {
       const input = wrapper.find("input");
-      //   const range = wrapper.find(".input-value-range");
       input.simulate("focus");
-      input.simulate("change", { target: { value: "Hello" } });
-      //   wrapper.update();
-      //   console.log(range.text());
+      input.simulate("change", { target: { value: 1 } });
+      expect(wrapper.find(".input-value-range").text()).toBe("1");
+      input.simulate("focus");
+      input.simulate("change", { target: { value: "name surname" } });
+      expect(wrapper.find(".input-value-range").text()).toBe("name surname");
+   });
 
-      //   //   input.simulate("keyDown", {
-      //   //      which: 27,
-      //   //      target: {
-      //   //         blur() {
-      //   //            // Needed since <EditableText /> calls target.blur()
-      //   //            input.simulate("blur");
-      //   //         },
-      //   //      },
-      //   //   });
-      //   //   console.log(input);
-      //   expect(input.prop("value")).toEqual("Hello");
+   test("functions called once", () => {
+      fakeChangeFunction();
+      validationFun();
+      expect(fakeChangeFunction).toBeCalledTimes(1);
+      expect(validationFun).toBeCalledTimes(1);
    });
 });

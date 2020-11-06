@@ -6,13 +6,17 @@ describe("Jokes Item", () => {
    let wrapper, fakeFunction;
    beforeAll(() => {
       fakeFunction = jest.fn(() => "3");
-      wrapper = shallow(<JokesItem key={0} title={"3"} categories={["nerdy", "explicit"]} joke="I am the joke haha!" onRender={fakeFunction} />);
+      wrapper = shallow(<JokesItem key={0} title={"3"} rating={3} categories={["nerdy", "explicit"]} joke="I am the joke haha!" onRender={fakeFunction} />);
    });
 
    test("recieved props", () => {
       expect(wrapper.find(".jokes-item-category").text()).toEqual("Categories: nerdy, explicit");
       expect(wrapper.find(".jokes-item-title").text()).toEqual("Joke Title: 3");
       expect(wrapper.find(".jokes-item-text").text()).toEqual("I am the joke haha!");
+   });
+
+   it("has class show", () => {
+      wrapper.find(".jokes-item").hasClass("show");
    });
 
    test("button click update", () => {

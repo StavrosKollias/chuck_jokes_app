@@ -1,0 +1,20 @@
+@import "../../../styles/variables";
+
+.social-container {
+   display: flex;
+   padding: 1rem;
+
+   a {
+      i {
+         padding: 0.2rem;
+         font-size: 1.3rem;
+         color: $light-blue-color;
+      }
+
+      &:hover {
+         i {
+            color: $light-color;
+         }
+      }
+   }
+}

@@ -1,23 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { decodeEntities } from "../../../utils/utils";
 import Button from "../../Peripherals/Button/Button";
 import { IJokesItemProps } from "./IJokeItemProps";
 const arrayOfclassesText = ["txt-primary", "txt-secondary", "txt-light-blue"];
 
 const JokesItem: React.FC<IJokesItemProps> = (props) => {
-   const randomNumber = Math.floor(Math.random() * Math.floor(20));
-   const [rate, SetRate] = useState<number>(randomNumber);
+   const [rating, setRating] = useState<number>(props.rating);
    const ratateTransform = {
-      transform: `rotate(${180 * rate}deg) scale(${Math.pow(-1, rate)},${Math.pow(-1, rate)})`,
+      transform: `rotate(${180 * rating}deg) scale(${Math.pow(-1, rating)},${Math.pow(-1, rating)})`,
    };
+
    const handleClickRateChangeButton = (event: React.MouseEvent<HTMLButtonElement>) => {
       console.log("like");
       const button = event.currentTarget;
-      SetRate((rate) => {
-         return rate + 1;
-      });
+      if (props.rating === rating)
+         setRating((rating) => {
+            return rating + 1;
+         });
       button.className = "btn-success";
    };
+
+   useEffect(() => {
+      setRating(props.rating);
+   }, [props.rating]);
+
+   useEffect(() => {
+      return () => {
+         // console.log(props, rating);
+      };
+   }, []);
 
    const decodedJoke = decodeEntities(props.joke);
 
@@ -43,11 +54,11 @@ const JokesItem: React.FC<IJokesItemProps> = (props) => {
                icon={<i className="fas fa-thumbs-up"></i>}
                title="Rate this joke!!"
                label=""
-               className="btn-primary"
+               className={props.rating === rating ? "btn-primary" : "btn-success"}
                handleClick={(e) => handleClickRateChangeButton(e)}
             />
             <div className="jokes-item-rate-number" style={ratateTransform}>
-               <span className="rate-counter">{rate}</span>
+               <span className="rate-counter">{rating}</span>
             </div>
          </div>
       </div>

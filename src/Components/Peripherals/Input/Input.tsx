@@ -1,25 +1,34 @@
 import React, { useState } from "react";
 import { IInputProps } from "./IInputProps";
+import { IInputState } from "./IInputState";
+
+const INITIAL_STATE: IInputState = { inputValue: "", error: false };
 
 const Input: React.FC<IInputProps> = (props) => {
-   var [inputValue, SetInputValue] = useState<string>("2");
+   var [state, setState] = useState<IInputState>(INITIAL_STATE);
 
-   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+   const handleInputChangeTest = (event: React.ChangeEvent<HTMLInputElement>) => {
       const incputChangeValue = event.target.value;
-      SetInputValue(incputChangeValue);
+      const validation = props.hanldeValidation(incputChangeValue);
+      setState((state: IInputState) => {
+         return { ...state, inputValue: incputChangeValue, error: !validation };
+      });
    };
 
    return (
-      <div className="input-container">
+      <div className={state.error ? `input-container-error ${props.containerClassName}` : props.containerClassName}>
          <label htmlFor={props.name}>{props.label}</label>
 
-         {props.type === "range" && <span className="input-value-range">{inputValue}</span>}
+         {props.type === "range" && <span className="input-value-range">{state.inputValue}</span>}
 
          <div className="input-container-sub">
             {props.icon && props.icon}
             <input
-               onChange={handleInputChange}
-               value={inputValue}
+               onChange={(e) => {
+                  handleInputChangeTest(e);
+                  props.handleInputChange(e);
+               }}
+               value={state.inputValue}
                type={props.type}
                name={props.name}
                className={props.className}
@@ -30,6 +39,8 @@ const Input: React.FC<IInputProps> = (props) => {
                placeholder={props.placeHolder}
             />
          </div>
+
+         {state.error && <span className="error-span">{props.errorMessage}</span>}
       </div>
    );
 };
