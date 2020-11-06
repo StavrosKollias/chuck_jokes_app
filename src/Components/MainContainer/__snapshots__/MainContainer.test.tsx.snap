@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainContainer behaviour Renders the component 1`] = `
+<main
+  className="wrapper"
+>
+  <Component>
+    <Header />
+    <div
+      className="container"
+    >
+      <Switch>
+        <Route
+          exact={true}
+          match={true}
+          path="/"
+          render={[Function]}
+        />
+        <Route
+          exact={true}
+          path="/random-joke"
+          render={[Function]}
+        />
+        <Route
+          exact={true}
+          path="/joke-list"
+          render={[Function]}
+        />
+        <Route
+          exact={true}
+          path="/search"
+          render={[Function]}
+        />
+      </Switch>
+    </div>
+  </Component>
+  <Footer />
+</main>
+`;

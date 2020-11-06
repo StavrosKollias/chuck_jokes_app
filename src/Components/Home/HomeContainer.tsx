@@ -6,26 +6,32 @@ import WelcomeComponent from "../WelcomeCard/WelcomeComponent";
 import { IHomeContainerProps } from "./IHomeContainerProps";
 import "./HomeContainer.scss";
 
+const INITIAL_STATE: Array<IJoke> = null;
+
 const HomeContainer: React.FC<IHomeContainerProps> = (props) => {
    props.onRender("");
-   const [jokes, SetJokes] = useState<Array<IJoke>>(null);
+   const [state, setState] = useState<Array<IJoke>>(INITIAL_STATE);
    const getFourRandomJokes = async (numberJokes: number) => {
       const arrayJokes = await getMultipleRandomJokes(numberJokes);
       if (arrayJokes) return arrayJokes;
    };
 
    useEffect(() => {
-      if (!jokes) {
+      if (!state) {
          getFourRandomJokes(4).then((data) => {
-            SetJokes(data);
+            setState(data);
          });
       }
+   });
+
+   useEffect(() => {
+      return () => {};
    });
 
    return (
       <div className="container py-1 home-container">
          <WelcomeComponent />
-         {jokes && <CardsContainer jokes={jokes} />}
+         {state && <CardsContainer jokes={state} />}
       </div>
    );
 };

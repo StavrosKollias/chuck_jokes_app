@@ -19,9 +19,8 @@ const INITIAL_STATE: IJokesContainerState = {
    error: false,
    errorInput: true,
    loading: false,
-   timeOutScrolling:2500
+   timeOutScrolling: 2500,
 };
-
 
 const getRandomJokes = async (multiple: boolean) => {
    let responseJokes;
@@ -64,22 +63,22 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
       runJokeItems();
       const element = runLoadMore();
       if (element) setLoadingState();
-   },[]);
+   }, []);
 
    const setLoadingState = () => {
-         setState((state: IJokesContainerState) => {
-            return {
-               ...state,
-               loading: true,
-            };
-         });
+      setState((state: IJokesContainerState) => {
+         return {
+            ...state,
+            loading: true,
+         };
+      });
    };
 
    const updateState = (newState: IJokesContainerState) => {
       setState(newState);
    };
 
-   const initialMountData = useCallback((filter:boolean,propsMultiple:boolean,stateMultiple:boolean) => {
+   const initialMountData = useCallback((filter: boolean, propsMultiple: boolean, stateMultiple: boolean) => {
       if (stateMultiple !== propsMultiple) {
          getRandomJokes(propsMultiple).then((data) => {
             const newState = {
@@ -91,45 +90,44 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
                error: INITIAL_STATE.error,
                errorInput: INITIAL_STATE.errorInput,
                loading: INITIAL_STATE.loading,
-               timeOutScrolling:INITIAL_STATE.timeOutScrolling
+               timeOutScrolling: INITIAL_STATE.timeOutScrolling,
             };
             updateState(newState);
          });
       }
-   },[]);
+   }, []);
 
-   const updateDataOnScroll = (loading:boolean) => {
+   const updateDataOnScroll = (loading: boolean) => {
       const stateData = state.data;
       if (loading && !fetchingData.current) {
          fetchingData.current = true;
-         setTimeout(()=>{
+         setTimeout(() => {
             getRandomJokes(state.multiple).then((data) => {
-                  const newData = stateData.concat(data);
-                  fetchingData.current = false;
-                  setState((state: IJokesContainerState) => {
-                     return {
-                        ...state,
-                        data: newData,
-                        loading: false,
-                     };
-                  });
+               const newData = stateData.concat(data);
+               fetchingData.current = false;
+               setState((state: IJokesContainerState) => {
+                  return {
+                     ...state,
+                     data: newData,
+                     loading: false,
+                  };
                });
-         },state.timeOutScrolling);
+            });
+         }, state.timeOutScrolling);
       }
    };
 
    // initial mount
    useEffect(() => {
-      initialMountData(props.filter,props.multiple,state.multiple);
-      // 
+      initialMountData(props.filter, props.multiple, state.multiple);
       window.addEventListener("scroll", onScollWindow);
 
       runJokeItems();
-   }, [initialMountData,onScollWindow,props.filter, props.multiple, state.multiple]);
+   }, [initialMountData, onScollWindow, props.filter, props.multiple, state.multiple]);
 
    // componentDidUpdate
    useEffect(() => {
-      if(!fetchingData.current){
+      if (!fetchingData.current) {
          updateDataOnScroll(state.loading);
          runJokeItems();
       }
@@ -140,7 +138,6 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
       return () => {};
    });
 
-  
    const loadMoreButtonDisplayed = state.multiple && state.data.length;
    return (
       <section className="jokes-container">
@@ -155,20 +152,11 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
 
          {state.data && (
             <div>
-               {!state.multiple &&
-                  state.data.map((e: IJoke, i: number) => {
-                     const indexFirstword = e.joke.indexOf(" ");
-                     return (
-                        <JokesItem key={i} title={e.joke.substr(0, indexFirstword)} rating={e.id} categories={e.categories} joke={e.joke} onRender={props.onRender} />
-                     );
-                  })}
-               {state.multiple &&
-                  state.data.map((e: IJoke, i: number) => {
-                     const indexFirstword = e.joke.indexOf(" ");
-                     return (
-                        <JokesItem key={i} title={e.joke.substr(0, indexFirstword)} rating={e.id} categories={e.categories} joke={e.joke} onRender={props.onRender} />
-                     );
-                  })}
+               {state.data.map((e: IJoke, i: number) => {
+                  const indexFirstword = e.joke.indexOf(" ");
+                  return <JokesItem key={i} title={e.joke.substr(0, indexFirstword)} rating={e.id} categories={e.categories} joke={e.joke} onRender={props.onRender} />;
+               })}
+
                {loadMoreButtonDisplayed && <LoadMore />}
             </div>
          )}

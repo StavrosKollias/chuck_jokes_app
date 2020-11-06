@@ -7,7 +7,7 @@ const arrayOfclassesText = ["txt-primary", "txt-secondary", "txt-light-blue"];
 const JokesItem: React.FC<IJokesItemProps> = (props) => {
    const [rating, setRating] = useState<number>(props.rating);
    const ratateTransform = {
-      transform: `rotate(${180 }deg) scale(${Math.pow(-1,-1)},${Math.pow(-1, -1)})`,
+      transform: `rotate(-180deg) scale(${Math.pow(-1, -1)},${Math.pow(-1, -1)})`,
    };
 
    const handleClickRateChangeButton = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -24,8 +24,7 @@ const JokesItem: React.FC<IJokesItemProps> = (props) => {
    }, [props.rating]);
 
    useEffect(() => {
-      return () => {
-      };
+      return () => {};
    }, []);
 
    const decodedJoke = decodeEntities(props.joke);
@@ -55,7 +54,7 @@ const JokesItem: React.FC<IJokesItemProps> = (props) => {
                className={props.rating === rating ? "btn-primary" : "btn-success"}
                handleClick={(e) => handleClickRateChangeButton(e)}
             />
-            <div className="jokes-item-rate-number" style={props.rating === rating?ratateTransform:null}>
+            <div className="jokes-item-rate-number" style={props.rating === rating ? ratateTransform : null}>
                <span className="rate-counter">{rating}</span>
             </div>
          </div>

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import LoadMore from "../../LoadMore/LoadMore";
 import Button from "../../Peripherals/Button/Button";
 import NavigationBarItem from "../NavigationbarItems/NavigationBarItem";
 import NavigationBarLogo from "../NavigationBarLogo/NavigationBarLogo";
-import { INavigationBarProps } from "./INavigationBarProps";
 import "./NavigationBar.scss";
 
-const NavigationBar: React.FC<INavigationBarProps> = (props) => {
+const NavigationBar: React.FC = () => {
    const [state, setState] = useState<number>(0);
 
    const handleClickNavButton = () => {
