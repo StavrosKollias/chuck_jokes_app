@@ -1,11 +1,7 @@
 import React from "react";
-import { IJoke } from "../../../Interfaces/IJokes";
 import CardJoke from "../CardJoke/CardJoke";
 import "./CardsContainer.scss";
-
-interface ICardContainerProps {
-   jokes: Array<IJoke>;
-}
+import { ICardContainerProps } from "./ICarContainerProps";
 
 const CardsContainer: React.FC<ICardContainerProps> = (props) => {
    const imagesUrls = [

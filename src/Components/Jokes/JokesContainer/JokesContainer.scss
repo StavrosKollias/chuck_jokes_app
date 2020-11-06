@@ -44,6 +44,11 @@
          }
       }
 
+      &-text {
+         width: 80%;
+         word-break: break-all;
+      }
+
       &.show {
          visibility: visible;
          opacity: 1;

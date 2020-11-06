@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IJoke } from "../../../Interfaces/IJokes";
-import { getAllRandomJokesNotExplicit, getMultipleRandomJokes, getRandomJokeByCharacter } from "../../../utils/apis";
-import { runJokeItems, runLoadMore, spliceArray, validationInputFullName } from "../../../utils/utils";
+import { getMultipleRandomJokes, getRandomJokeByCharacter } from "../../../utils/apis";
+import { runJokeItems, runLoadMore, validationInputFullName } from "../../../utils/utils";
 import ControlBar from "../../Controlbar/ControlSearchBar";
 import LoadMore from "../../LoadMore/LoadMore";
 import JokesItem from "../JokesItem/JokesItem";
@@ -30,7 +30,13 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
    const [state, setState] = useState(INITIAL_STATE);
    props.onRender("");
 
+   const onScollWindow = () => {
+      runJokeItems();
+      const element = runLoadMore();
+      if (element) setLoadingState();
+   };
    const filterData = (event: React.MouseEvent<HTMLButtonElement>) => {
+      window.removeEventListener("scroll", onScollWindow, false);
       const firstName = state.filterString.split(" ")[0];
       const lastName = state.filterString.split(" ")[1];
       getRandomJokeByCharacter(firstName, lastName).then((data) => {
@@ -110,11 +116,7 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
    // initial mount
    useEffect(() => {
       initialMountData();
-      window.addEventListener("scroll", () => {
-         runJokeItems();
-         const element = runLoadMore();
-         if (element) setLoadingState();
-      });
+      window.addEventListener("scroll", onScollWindow, false);
 
       runJokeItems();
    }, [props.filter, props.multiple, state.index, state.multiple]);
@@ -122,6 +124,7 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
    // componentDidUpdate
    useEffect(() => {
       updateDataOnScroll(state.loading);
+
       runJokeItems();
    });
 

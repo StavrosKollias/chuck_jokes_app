@@ -5,6 +5,8 @@
 
    &-details {
       padding: 0.5rem;
+      width: 90%;
+
       @media (min-width: $mobile) {
          padding: 1rem;
       }
