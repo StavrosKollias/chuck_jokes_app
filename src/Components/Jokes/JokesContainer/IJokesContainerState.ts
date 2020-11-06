@@ -5,8 +5,9 @@ export interface IJokesContainerState {
    index: number;
    multiple: boolean;
    filter: boolean;
-   filterString: string;
+   filterString: string ;
    error: boolean;
    errorInput: boolean;
    loading: boolean;
+   timeOutScrolling:number;
 }

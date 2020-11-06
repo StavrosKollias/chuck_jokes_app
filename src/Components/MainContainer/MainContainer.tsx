@@ -7,7 +7,7 @@ import JockesContainer from "../Jokes/JokesContainer/JokesContainer";
 import Search from "../Search/Search";
 
 const MainContainer: React.FC = () => {
-   const loadFunctionComponents = (e) => {
+   const loadFunctionComponents = (e:any) => {
       return window.location.pathname;
    };
 
@@ -21,9 +21,6 @@ const MainContainer: React.FC = () => {
                   <Route path="/random-joke" exact render={() => <JockesContainer multiple={false} filter={false} onRender={(e) => loadFunctionComponents(e)} />} />
                   <Route path="/joke-list" exact render={() => <JockesContainer multiple={true} filter={false} onRender={(e) => loadFunctionComponents(e)} />} />
                   <Route path="/search" exact render={() => <Search onRender={(e) => loadFunctionComponents(e)} />} />
-                  {/* <Route path="/"  render={() => <LoginRegisterPopupComponent />} />
-                 
-                     <Route path="/Register" exact render={() => <RegisterFormComponent />} /> */}
                </Switch>
             </div>
          </BrowserRouter>

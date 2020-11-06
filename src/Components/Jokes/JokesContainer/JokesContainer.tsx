@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useRef } from "react";
 import { IJoke } from "../../../Interfaces/IJokes";
 import { getMultipleRandomJokes, getRandomJokeByCharacter } from "../../../utils/apis";
 import { runJokeItems, runLoadMore, validationInputFullName } from "../../../utils/utils";
@@ -18,7 +19,9 @@ const INITIAL_STATE: IJokesContainerState = {
    error: false,
    errorInput: true,
    loading: false,
+   timeOutScrolling:2000
 };
+
 
 const getRandomJokes = async (multiple: boolean) => {
    let responseJokes;
@@ -28,15 +31,10 @@ const getRandomJokes = async (multiple: boolean) => {
 
 const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
    const [state, setState] = useState(INITIAL_STATE);
+   const fetchingData = useRef(false);
    props.onRender("");
-
-   const onScollWindow = () => {
-      runJokeItems();
-      const element = runLoadMore();
-      if (element) setLoadingState();
-   };
    const filterData = (event: React.MouseEvent<HTMLButtonElement>) => {
-      window.removeEventListener("scroll", onScollWindow, false);
+      window.removeEventListener("scroll", onScollWindow);
       const firstName = state.filterString.split(" ")[0];
       const lastName = state.filterString.split(" ")[1];
       getRandomJokeByCharacter(firstName, lastName).then((data) => {
@@ -49,7 +47,7 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
          });
       });
    };
-
+   
    const handleInputChangeFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.currentTarget.value;
       const validation = validationInputFullName(value);
@@ -61,6 +59,12 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
          };
       });
    };
+
+   const onScollWindow = useCallback(() => {
+      runJokeItems();
+      const element = runLoadMore();
+      if (element) setLoadingState();
+   },[]);
 
    const setLoadingState = () => {
       const el = document.querySelector(".jokes-container");
@@ -79,53 +83,60 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
       setState(newState);
    };
 
-   const initialMountData = () => {
-      if (state.multiple !== props.multiple) {
-         getRandomJokes(props.multiple).then((data) => {
+   const initialMountData = useCallback((filter:boolean,propsMultiple:boolean,stateMultiple:boolean) => {
+      if (stateMultiple !== propsMultiple) {
+         getRandomJokes(propsMultiple).then((data) => {
             const newState = {
                data: data,
-               index: 5,
-               multiple: props.multiple,
-               filter: props.filter,
-               filterString: null,
-               error: false,
-               errorInput: true,
-               loading: false,
+               index: INITIAL_STATE.index,
+               multiple: propsMultiple,
+               filter: filter,
+               filterString: INITIAL_STATE.filterString,
+               error: INITIAL_STATE.error,
+               errorInput: INITIAL_STATE.errorInput,
+               loading: INITIAL_STATE.loading,
+               timeOutScrolling:INITIAL_STATE.timeOutScrolling
             };
             updateState(newState);
          });
       }
-   };
+   },[]);
 
-   const updateDataOnScroll = (loading) => {
+   const updateDataOnScroll = (loading:boolean) => {
       const stateData = state.data;
-      if (loading) {
-         getMultipleRandomJokes(state.index).then((data) => {
-            const newData = stateData.concat(data);
-            setState((state: IJokesContainerState) => {
-               return {
-                  ...state,
-                  data: newData,
-                  loading: false,
-               };
-            });
-         });
+      if (loading && !fetchingData.current) {
+         fetchingData.current = true;
+         setTimeout(()=>{
+            getRandomJokes(state.multiple).then((data) => {
+                  const newData = stateData.concat(data);
+                  fetchingData.current = false;
+                  setState((state: IJokesContainerState) => {
+                     return {
+                        ...state,
+                        data: newData,
+                        loading: false,
+                     };
+                  });
+               });
+         },state.timeOutScrolling);
       }
    };
 
    // initial mount
    useEffect(() => {
-      initialMountData();
-      window.addEventListener("scroll", onScollWindow, true);
+      initialMountData(props.filter,props.multiple,state.multiple);
+      // 
+      window.addEventListener("scroll", onScollWindow);
 
       runJokeItems();
-   }, [props.filter, props.multiple, state.index, state.multiple]);
+   }, [initialMountData,onScollWindow,props.filter, props.multiple, state.multiple]);
 
    // componentDidUpdate
    useEffect(() => {
-      updateDataOnScroll(state.loading);
-
-      runJokeItems();
+      if(!fetchingData.current){
+         updateDataOnScroll(state.loading);
+         runJokeItems();
+      }
    });
 
    // umount
@@ -133,6 +144,7 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
       return () => {};
    });
 
+  
    const loadMoreButtonDisplayed = state.multiple && state.data.length;
    return (
       <section className="jokes-container">

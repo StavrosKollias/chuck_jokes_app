@@ -21,10 +21,10 @@ export const spliceArray = (array: Array<IJoke>, start: number, stop: number) =>
 export const validationInputFullName = (str: string) => {
    const testNumber = str.replace(/[a-z ,.'-]+$/i, "");
    const testSpace = str.replace(/[a-z,1-9.'-]+$/i, "");
-   // const testSpace = str.replace(/^[  ]+$/i, "");
+   const stringWhitoutSpaces=  str.replace(/\s+/g, '');
+   const lengthdifference= str.length - stringWhitoutSpaces.length;
    const indexOfSpace = str.indexOf(" ");
-   console.log(testSpace.length);
-   return testNumber.length === 0 && testSpace.length > 0 && indexOfSpace < str.length - 1;
+   return testNumber.length === 0 && testSpace.length > 0 &&  lengthdifference===1 && indexOfSpace < str.length - 1;
 };
 
 export const isInViewPort = (el: any) => {
