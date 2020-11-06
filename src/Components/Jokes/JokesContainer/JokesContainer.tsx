@@ -19,7 +19,7 @@ const INITIAL_STATE: IJokesContainerState = {
    error: false,
    errorInput: true,
    loading: false,
-   timeOutScrolling:2000
+   timeOutScrolling:2500
 };
 
 
@@ -47,7 +47,7 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
          });
       });
    };
-   
+
    const handleInputChangeFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.currentTarget.value;
       const validation = validationInputFullName(value);
@@ -67,16 +67,12 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
    },[]);
 
    const setLoadingState = () => {
-      const el = document.querySelector(".jokes-container");
-      const bottom = Number((el.scrollHeight - el.scrollTop).toFixed(0)) - el.clientHeight < 50;
-      if (bottom) {
          setState((state: IJokesContainerState) => {
             return {
                ...state,
                loading: true,
             };
          });
-      }
    };
 
    const updateState = (newState: IJokesContainerState) => {
