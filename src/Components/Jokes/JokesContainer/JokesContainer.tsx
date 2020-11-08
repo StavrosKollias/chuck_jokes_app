@@ -32,6 +32,7 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
    const [state, setState] = useState(INITIAL_STATE);
    const fetchingData = useRef(false);
    props.onRender("");
+
    const filterData = (event: React.MouseEvent<HTMLButtonElement>) => {
       window.removeEventListener("scroll", onScollWindow);
       const firstName = state.filterString.split(" ")[0];
@@ -59,21 +60,6 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
       });
    };
 
-   const onScollWindow = useCallback(() => {
-      runJokeItems();
-      const element = runLoadMore();
-      if (element) setLoadingState();
-   }, []);
-
-   const setLoadingState = () => {
-      setState((state: IJokesContainerState) => {
-         return {
-            ...state,
-            loading: true,
-         };
-      });
-   };
-
    const updateState = (newState: IJokesContainerState) => {
       setState(newState);
    };
@@ -96,6 +82,21 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
          });
       }
    }, []);
+
+   const onScollWindow = useCallback(() => {
+      runJokeItems();
+      const element = runLoadMore();
+      if (element) setLoadingState();
+   }, []);
+
+   const setLoadingState = () => {
+      setState((state: IJokesContainerState) => {
+         return {
+            ...state,
+            loading: true,
+         };
+      });
+   };
 
    const updateDataOnScroll = (loading: boolean) => {
       const stateData = state.data;
@@ -138,7 +139,7 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
       return () => {};
    });
 
-   const loadMoreButtonDisplayed = state.multiple && state.data.length;
+   const loadMoreButtonDisplayed = state.multiple && state.data.length > 1;
    return (
       <section className="jokes-container">
          {state.filter && (
