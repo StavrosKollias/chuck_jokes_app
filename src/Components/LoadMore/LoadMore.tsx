@@ -4,8 +4,7 @@ import "./LoadMore.scss";
 const LoadMore: React.FC = () => {
    return (
       <div className="load-more-container">
-        Loading.....
-
+         Loading
          <div className="loader">
             <div></div>
             <div></div>

@@ -21,7 +21,7 @@ const JokesItem: React.FC<IJokesItemProps> = (props) => {
 
    useEffect(() => {
       setRating(props.rating);
-   }, [props.rating]);
+   }, [props]);
 
    useEffect(() => {
       return () => {};
@@ -31,10 +31,10 @@ const JokesItem: React.FC<IJokesItemProps> = (props) => {
 
    return (
       <div className="jokes-item">
-         <h1 className="jokes-item-title mb-1 txt-secondary">Joke Title: {props.title}</h1>
-         {props.categories.length > 1 && (
+         <h1 className="jokes-item-title mb-1 txt-secondary txt-center">Joke Title: {props.title}</h1>
+         {props.categories.length > 0 && (
             <div className="jokes-item-category mb-1">
-               <span className="category-title txt-bold">{props.categories.length > 1 ? "Categories:" : "Category:"} </span>
+               <span className="category-title txt-primary txt-bold">{props.categories.length > 1 ? "Categories:" : "Category:"} </span>
                {props.categories.map((e, i) => {
                   return (
                      <span key={i} className={`category ${arrayOfclassesText[i]}`}>
@@ -44,7 +44,7 @@ const JokesItem: React.FC<IJokesItemProps> = (props) => {
                })}
             </div>
          )}
-         <div className="jokes-item-text mb-1">{decodedJoke}</div>
+         <div className="jokes-item-text  txt-center mb-1">{decodedJoke}</div>
          <div className="jokes-item-rate">
             <Button
                id="rate-btn"

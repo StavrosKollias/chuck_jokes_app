@@ -31,7 +31,6 @@ const getRandomJokes = async (multiple: boolean) => {
 const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
    const [state, setState] = useState(INITIAL_STATE);
    const fetchingData = useRef(false);
-  
 
    const filterData = (event: React.MouseEvent<HTMLButtonElement>) => {
       window.removeEventListener("scroll", onScollWindow);
@@ -46,6 +45,7 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
             };
          });
       });
+      document.querySelector(".jokes-item").scrollIntoView({ behavior: "smooth", block: "end" });
    };
 
    const handleInputChangeFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,10 +83,10 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
       }
    }, []);
 
-   const scrollTop= useCallback((props)=>{
+   const scrollTop = useCallback((props) => {
       console.log("scroll-top");
-       props.onRender("");
-   },[]);
+      props.onRender("");
+   }, []);
 
    const onScollWindow = useCallback(() => {
       runJokeItems();
@@ -125,11 +125,11 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
 
    // initial mount
    useEffect(() => {
-    if(!state.data)  scrollTop(props);
+      if (!state.data) scrollTop(props);
       initialMountData(props.filter, props.multiple, state.multiple);
       window.addEventListener("scroll", onScollWindow);
       runJokeItems();
-   }, [initialMountData,scrollTop, onScollWindow,props,state]);
+   }, [initialMountData, scrollTop, onScollWindow, props, state]);
 
    // componentDidUpdate
    useEffect(() => {
@@ -161,8 +161,8 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
                {state.data.map((e: IJoke, i: number) => {
                   const decodedJoke = decodeEntities(e.joke);
                   const indexFirstword = decodedJoke.indexOf(" ");
-                  var title= decodedJoke.substr(0, indexFirstword);
-                  title=title.replace(/[^a-zA-Z0-9 ]/g, "");
+                  var title = decodedJoke.substr(0, indexFirstword);
+                  title = title.replace(/[^a-zA-Z0-9 ]/g, "");
                   return <JokesItem key={i} title={title} rating={e.id} categories={e.categories} joke={e.joke} onRender={props.onRender} />;
                })}
 

@@ -5,14 +5,14 @@ import NaviagtionBar from "./NavigationBar";
 describe("NavigationBar", () => {
    let wrapper;
    beforeEach(() => {
-      wrapper = shallow(<NaviagtionBar active={true} />);
+      wrapper = shallow(<NaviagtionBar />);
    });
 
    it("renders once", () => {
       expect(wrapper).toHaveLength(1);
    });
 
-   test("check how menay route links", () => {
+   test("how many route links", () => {
       expect(wrapper.find(".nav-menu-item")).toHaveLength(4);
    });
 });
