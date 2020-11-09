@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
 import { IJoke } from "../../../Interfaces/IJokes";
 import { getMultipleRandomJokes, getRandomJokeByCharacter } from "../../../utils/apis";
-import { runJokeItems, runLoadMore, validationInputFullName } from "../../../utils/utils";
+import { decodeEntities, runJokeItems, runLoadMore, validationInputFullName } from "../../../utils/utils";
 import ControlBar from "../../Controlbar/ControlSearchBar";
 import LoadMore from "../../LoadMore/LoadMore";
 import JokesItem from "../JokesItem/JokesItem";
@@ -154,8 +154,9 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
          {state.data && (
             <div>
                {state.data.map((e: IJoke, i: number) => {
-                  const indexFirstword = e.joke.indexOf(" ");
-                  return <JokesItem key={i} title={e.joke.substr(0, indexFirstword)} rating={e.id} categories={e.categories} joke={e.joke} onRender={props.onRender} />;
+                   const decodedJoke = decodeEntities(e.joke);
+                  const indexFirstword = decodedJoke.indexOf(" ");
+                  return <JokesItem key={i} title={decodedJoke.substr(0, indexFirstword)} rating={e.id} categories={e.categories} joke={e.joke} onRender={props.onRender} />;
                })}
 
                {loadMoreButtonDisplayed && <LoadMore />}

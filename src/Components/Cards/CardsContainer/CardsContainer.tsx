@@ -1,4 +1,5 @@
 import React from "react";
+import { decodeEntities } from "../../../utils/utils";
 import CardJoke from "../CardJoke/CardJoke";
 import "./CardsContainer.scss";
 import { ICardContainerProps } from "./ICarContainerProps";
@@ -14,13 +15,14 @@ const CardsContainer: React.FC<ICardContainerProps> = (props) => {
    return (
       <section className="card-images-container">
          {props.jokes.map((e, i) => {
-            const indexFirstword = e.joke.indexOf(" ");
+            const decodedJoke = decodeEntities(e.joke);
+                  const indexFirstword = decodedJoke.indexOf(" ");
             return (
                <CardJoke
                   key={i}
                   joke={e.joke}
                   categories={e.categories}
-                  title={`Joke Title: ${e.joke.substr(0, indexFirstword)}`}
+                  title={`Joke Title: ${decodedJoke.substr(0, indexFirstword)}`}
                   btnLabel="View more"
                   btnUrl={buttonUrls[0]}
                   src={imagesUrls[i]}
