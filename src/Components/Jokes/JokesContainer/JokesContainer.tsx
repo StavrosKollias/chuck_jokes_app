@@ -84,7 +84,6 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
    }, []);
 
    const scrollTop = useCallback((props) => {
-      console.log("scroll-top");
       props.onRender("");
    }, []);
 
