@@ -9,6 +9,7 @@ import Search from "../Search/Search";
 
 const MainContainer: React.FC = () => {
    const loadFunctionComponents = (e: any) => {
+      window.scrollTo(0, 0);
       return window.location.pathname;
    };
 

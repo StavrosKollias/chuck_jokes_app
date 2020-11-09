@@ -31,7 +31,7 @@ const getRandomJokes = async (multiple: boolean) => {
 const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
    const [state, setState] = useState(INITIAL_STATE);
    const fetchingData = useRef(false);
-   props.onRender("");
+  
 
    const filterData = (event: React.MouseEvent<HTMLButtonElement>) => {
       window.removeEventListener("scroll", onScollWindow);
@@ -83,6 +83,11 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
       }
    }, []);
 
+   const scrollTop= useCallback((props)=>{
+      console.log("scroll-top");
+       props.onRender("");
+   },[]);
+
    const onScollWindow = useCallback(() => {
       runJokeItems();
       const element = runLoadMore();
@@ -120,11 +125,11 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
 
    // initial mount
    useEffect(() => {
+    if(!state.data)  scrollTop(props);
       initialMountData(props.filter, props.multiple, state.multiple);
       window.addEventListener("scroll", onScollWindow);
-
       runJokeItems();
-   }, [initialMountData, onScollWindow, props.filter, props.multiple, state.multiple]);
+   }, [initialMountData,scrollTop, onScollWindow,props,state]);
 
    // componentDidUpdate
    useEffect(() => {
