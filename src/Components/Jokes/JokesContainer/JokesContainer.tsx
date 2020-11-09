@@ -154,9 +154,11 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
          {state.data && (
             <div>
                {state.data.map((e: IJoke, i: number) => {
-                   const decodedJoke = decodeEntities(e.joke);
+                  const decodedJoke = decodeEntities(e.joke);
                   const indexFirstword = decodedJoke.indexOf(" ");
-                  return <JokesItem key={i} title={decodedJoke.substr(0, indexFirstword)} rating={e.id} categories={e.categories} joke={e.joke} onRender={props.onRender} />;
+                  var title= decodedJoke.substr(0, indexFirstword);
+                  title=title.replace(/[^a-zA-Z0-9 ]/g, "");
+                  return <JokesItem key={i} title={title} rating={e.id} categories={e.categories} joke={e.joke} onRender={props.onRender} />;
                })}
 
                {loadMoreButtonDisplayed && <LoadMore />}

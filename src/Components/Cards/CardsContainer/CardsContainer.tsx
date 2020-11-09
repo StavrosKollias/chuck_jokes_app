@@ -16,13 +16,15 @@ const CardsContainer: React.FC<ICardContainerProps> = (props) => {
       <section className="card-images-container">
          {props.jokes.map((e, i) => {
             const decodedJoke = decodeEntities(e.joke);
-                  const indexFirstword = decodedJoke.indexOf(" ");
+            const indexFirstword = decodedJoke.indexOf(" ");
+            let title= decodedJoke.substr(0, indexFirstword);
+            title=title.replace(/[^a-zA-Z0-9 ]/g, "");
             return (
                <CardJoke
                   key={i}
                   joke={e.joke}
                   categories={e.categories}
-                  title={`Joke Title: ${decodedJoke.substr(0, indexFirstword)}`}
+                  title={`Joke Title: ${title}`}
                   btnLabel="View more"
                   btnUrl={buttonUrls[0]}
                   src={imagesUrls[i]}
