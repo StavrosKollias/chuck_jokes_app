@@ -138,9 +138,9 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
       }
    });
 
-   // umount
+   // // umount
    useEffect(() => {
-      return () => {};
+      return () => {  window.removeEventListener("scroll", onScollWindow);};
    });
 
    const loadMoreButtonDisplayed = state.multiple && state.data.length > 1;
