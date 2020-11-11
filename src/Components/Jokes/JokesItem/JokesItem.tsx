@@ -23,8 +23,6 @@ const JokesItem: React.FC<IJokesItemProps> = (props) => {
       setRating(props.rating);
    }, [props.rating]);
 
- 
-
    const decodedJoke = decodeEntities(props.joke);
 
    return (
