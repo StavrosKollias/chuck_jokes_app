@@ -65,20 +65,20 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
    };
 
    const initialMountData = useCallback((filter: boolean, propsMultiple: boolean) => {
-         getRandomJokes(propsMultiple).then((data) => {
-            const newState = {
-               data: data,
-               index: INITIAL_STATE.index,
-               multiple: propsMultiple,
-               filter: filter,
-               filterString: INITIAL_STATE.filterString,
-               error: INITIAL_STATE.error,
-               errorInput: INITIAL_STATE.errorInput,
-               loading: INITIAL_STATE.loading,
-               timeOutScrolling: INITIAL_STATE.timeOutScrolling,
-            };
-            updateState(newState);
-         });
+      getRandomJokes(propsMultiple).then((data) => {
+         const newState = {
+            data: data,
+            index: INITIAL_STATE.index,
+            multiple: propsMultiple,
+            filter: filter,
+            filterString: INITIAL_STATE.filterString,
+            error: INITIAL_STATE.error,
+            errorInput: INITIAL_STATE.errorInput,
+            loading: INITIAL_STATE.loading,
+            timeOutScrolling: INITIAL_STATE.timeOutScrolling,
+         };
+         updateState(newState);
+      });
    }, []);
 
    const scrollTop = useCallback((props) => {
@@ -135,7 +135,6 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
          runJokeItems();
       }
    });
-
 
    const loadMoreButtonDisplayed = state.multiple && state.data.length > 1;
    return (
