@@ -126,6 +126,11 @@ const JockesContainer: React.FC<IJokesContainerProps> = (props) => {
       initialMountData(props.filter, props.multiple);
       window.addEventListener("scroll", onScollWindow);
       runJokeItems();
+      return () => {
+         initialMountData(props.filter, props.multiple);
+         window.addEventListener("scroll", onScollWindow);
+         runJokeItems();
+      };
    }, [initialMountData, scrollTop, onScollWindow, props]);
 
    // componentDidUpdate
